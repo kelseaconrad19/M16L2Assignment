@@ -20,7 +20,7 @@ jobs:
           python-version: 3.12
 
       - name: Install libpq-dev
-        runs: |
+        run: |
           sudo apt-get update
           sudo apt-get install -y libpq-dev
 
@@ -54,7 +54,7 @@ jobs:
           python-version: 3.12
 
       - name: Install libpq-dev
-        runs: |
+        run: |
           sudo apt-get update
           sudo apt-get install -y libpq-dev
 
@@ -90,7 +90,7 @@ jobs:
           python-version: 3.12
 
       - name: Install libpq-dev
-        runs: |
+        run: |
           sudo apt-get update
           sudo apt-get install -y libpq-dev
 
