@@ -8,7 +8,9 @@ class TestApp(unittest.TestCase):
         new_app.app_context().push()
         db.create_all()
 
+        # Add initial data to the database for testing
         db.session.add(Sum(num1=1, num2=1, result=2))
+        db.session.add(Sum(num1=2, num2=3, result=5))
         db.session.commit()
 
     def tearDown(self):
@@ -27,7 +29,26 @@ class TestApp(unittest.TestCase):
         self.assertIsNotNone(data)
         self.assertEqual(data['result'], num1 + num2)
 
-# Write a negative test case: test the new endpoint with an invalid filter value
+    def test_find_all(self):
+        # Send a GET request to /sum to retrieve all entries, with headers
+        response = self.app.get('/sum', headers={"Content-Type": "application/json"})
+        self.assertEqual(response.status_code, 200)
+
+        # Parse the JSON response data
+        data = response.get_json()
+
+        # Print for debugging to check the data returned
+        print("Data returned by /sum:", data)
+
+        # Verify the response includes two entries
+        self.assertEqual(len(data), 2)
+        self.assertEqual(data[0]['num1'], 1)
+        self.assertEqual(data[0]['num2'], 1)
+        self.assertEqual(data[0]['result'], 2)
+        self.assertEqual(data[1]['num1'], 2)
+        self.assertEqual(data[1]['num2'], 3)
+        self.assertEqual(data[1]['result'], 5)
+
     def test_invalid_filter_value(self):
         response = self.app.get('/sum/results/999')
         self.assertEqual(response.status_code, 200)
@@ -36,5 +57,3 @@ class TestApp(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
-
-
