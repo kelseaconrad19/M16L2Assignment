@@ -42,6 +42,7 @@ jobs:
           echo "Contents of site-packages: $(ls -1 venv/lib/python*/site-packages)"
 
   tests:
+    needs: build
     runs-on: ubuntu-22.04
 
     steps:
