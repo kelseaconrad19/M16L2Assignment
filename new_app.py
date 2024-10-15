@@ -35,7 +35,7 @@ sums_schema = SumSchema()
 @new_app.route('/sum', methods=['GET'])
 def find_all():
     sums = db.session.execute(db.select(Sum)).sclars()
-    return sums_schema.jsonify(sums), 200
+    return jsonify(sums_schema.dumps(sums, many=True)), 200
 
 @new_app.route('/sum', methods=['POST'])
 def sum():
